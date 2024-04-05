@@ -1,0 +1,84 @@
+Sub movetofootnote()
+'
+' movetofootnote Macro
+' Create new footnote, convert footnote number to APA format (not superscripted, followed by .).
+' If text is selected, cut that text and paste it into the footnote.
+' I attach this to cmd-alt-f
+'
+    If Selection.Type = wdSelectionIP Then
+        With Selection
+            With .FootnoteOptions
+                .Location = wdBottomOfPage
+                .NumberingRule = wdRestartContinuous
+                .StartingNumber = 1
+                .NumberStyle = wdNoteNumberStyleArabic
+                .LayoutColumns = 0
+            End With
+        .Footnotes.Add Range:=Selection.Range, Reference:=""
+        End With
+        Selection.MoveLeft Unit:=wdCharacter, Count:=2
+        Selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
+        Selection.Font.Superscript = wdToggle
+        Selection.MoveRight Unit:=wdCharacter, Count:=1
+        Selection.TypeText Text:="."
+        Selection.MoveRight Unit:=wdCharacter, Count:=1
+
+    End If
+    If Selection.Type = wdSelectionNormal Then
+        Selection.Cut
+        Selection.TypeBackspace
+         With Selection
+             With .FootnoteOptions
+                  .Location = wdBottomOfPage
+                  .NumberingRule = wdRestartContinuous
+                  .StartingNumber = 1
+                  .NumberStyle = wdNoteNumberStyleArabic
+                  .LayoutColumns = 0
+              End With
+        .Footnotes.Add Range:=Selection.Range, Reference:=""
+        End With
+        Selection.MoveLeft Unit:=wdCharacter, Count:=2
+        Selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
+        Selection.Font.Superscript = wdToggle
+        Selection.MoveRight Unit:=wdCharacter, Count:=1
+        Selection.TypeText Text:="."
+        Selection.MoveRight Unit:=wdCharacter, Count:=1
+        Selection.PasteAndFormat (wdFormatSurroundingFormattingWithEmphasis)
+    End If
+End Sub
+
+Sub ConvertFootnotes()
+'
+' ConvertFootnotes Macro
+' Convert footnote numbers in footer to APA style: non-superscript, with period after.
+' Find the next footnote reference, convert to non-superscript, and add period after.
+' Not needed if you've created your footnotes with movetofootnote()
+'
+    Selection.Find.ClearFormatting
+    Selection.Find.Replacement.ClearFormatting
+    With Selection.Find
+        .Text = "^f "
+        .Replacement.Text = ""
+        .Forward = True
+        .Wrap = wdFindContinue
+        .Format = False
+        .MatchCase = False
+        .MatchWholeWord = False
+        .MatchWildcards = False
+        .MatchSoundsLike = False
+        .MatchAllWordForms = False
+    End With
+    Selection.Find.Execute
+    Selection.Font.Superscript = wdToggle
+    Selection.MoveRight Unit:=wdCharacter, Count:=1
+    Selection.MoveLeft Unit:=wdCharacter, Count:=1
+    Selection.TypeText Text:="."
+End Sub
+
+Sub emdash()
+'
+' emdash Macro
+' inserts a zero-width space, then an em-dash, then another zero-width space. I attach this to cmd-alt-hyphen.
+'
+Selection.TypeText Text:=ChrW(8203) & "—" & ChrW(8203)
+End Sub
