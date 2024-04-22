@@ -1,0 +1,35 @@
+Sub pasteWestlaw()
+  Application.ScreenUpdating = False
+
+  Dim rngFrom, rngTo
+    rngFrom = selection.Start
+    selection.PasteAndFormat (wdFormatSurroundingFormattingWithEmphasis)
+    rngTo = selection.End
+    ActiveDocument.Range(rngFrom, rngTo).Select
+
+  With selection.Find
+    .Text = Chr(34)
+    .Replacement.Text = Chr(39)
+  End With
+  selection.Find.Execute , , , , , , , , , , wdReplaceAll
+
+  With selection.Find
+    .Text = "^l^p"
+    .Replacement.Text = (Chr(34) + " ")
+  End With
+  selection.Find.Execute , , , , , , , , , , wdReplaceAll
+
+  With selection.Find
+    .Text = "^p"
+    .Replacement.Text = ""
+  End With
+  selection.Find.Execute , , , , , , , , , , wdReplaceAll
+
+  selection.Fields.Unlink 'remove hyperlinks
+  selection.MoveLeft Unit:=wdCharacter, Count:=1
+  selection.TypeText Text:=Chr(34)
+  selection.MoveRight Unit:=wdCharacter, Count:=(rngTo - rngFrom)
+    
+  Application.ScreenUpdating = True
+
+End Sub
