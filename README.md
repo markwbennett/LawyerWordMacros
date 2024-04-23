@@ -6,14 +6,12 @@ Better instructions for use are forthcoming, but basically:
 <ul>
 <li>Tools / Macro / Visual Basic Editor</li>
 <li>Normal / Modules / NewMacros</li>
-<li>Paste the macro (from "Sub" to "End Sub", inclusive) at the bottom of the code box.</li>
+<li>Paste the macro (from "Sub" to "End Sub", inclusive) at the bottom of the code box.</li></ul>
 
 
 To trigger a macro:
-
-Tools / Macros / Macro
-
-Run
+<ul><li>Tools / Macros / Macro</li>
+<li>Run</li></ul>
 
 Or, better, 
 
