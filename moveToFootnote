@@ -1,12 +1,17 @@
 Sub movetofootnote()
 '
 ' movetofootnote Macro
-' Create new footnote, convert footnote number to APA format (not superscripted, followed by .).
+' Create new footnote, convert footnote number to not superscripted, preceded by a tab and followed by period and a tab
+' My footnote numbers are "outdented" so that the numbers are in the margin but right-aligned, and the text
+' has an even left margin.
 ' If text is selected, cut that text and paste it into the footnote.
 ' I attach this to cmd-alt-f
 '
-    If Selection.Type = wdSelectionIP Then
-        With Selection
+' To change your footnote formatting, view your document in draft mode, then "show notes," and
+' change the format for "all footnotes," "footnote separator," etc.
+'
+    If selection.Type = wdSelectionIP Then ' if there is no text highlighted
+        With selection
             With .FootnoteOptions
                 .Location = wdBottomOfPage
                 .NumberingRule = wdRestartContinuous
@@ -14,35 +19,39 @@ Sub movetofootnote()
                 .NumberStyle = wdNoteNumberStyleArabic
                 .LayoutColumns = 0
             End With
-        .Footnotes.Add Range:=Selection.Range, Reference:=""
+        .Footnotes.Add Range:=selection.Range, Reference:=""
         End With
-        Selection.MoveLeft Unit:=wdCharacter, Count:=2
-        Selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
-        Selection.Font.Superscript = wdToggle
-        Selection.MoveRight Unit:=wdCharacter, Count:=1
-        Selection.TypeText Text:="."
-        Selection.MoveRight Unit:=wdCharacter, Count:=1
-
+        selection.MoveLeft Unit:=wdCharacter, Count:=2
+        selection.TypeText Text:=vbTab
+        selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
+        selection.Font.Superscript = wdToggle ' switch from superscript
+        selection.MoveRight Unit:=wdCharacter, Count:=1
+        selection.TypeText Text:="." ' add a period
+        selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend ' highlight the space after
+        selection.TypeText Text:=vbTab ' conver it to a tab
+  
     End If
-    If Selection.Type = wdSelectionNormal Then
-        Selection.Cut
-        Selection.TypeBackspace
-         With Selection
+    If selection.Type = wdSelectionNormal Then ' if there is text highlighted
+        selection.Cut ' cut the text
+        selection.TypeBackspace ' delete the space before
+         With selection
              With .FootnoteOptions
-                  .Location = wdBottomOfPage
-                  .NumberingRule = wdRestartContinuous
-                  .StartingNumber = 1
-                  .NumberStyle = wdNoteNumberStyleArabic
-                  .LayoutColumns = 0
-              End With
-        .Footnotes.Add Range:=Selection.Range, Reference:=""
+                    .Location = wdBottomOfPage
+                    .NumberingRule = wdRestartContinuous
+                    .StartingNumber = 1
+                    .NumberStyle = wdNoteNumberStyleArabic
+                    .LayoutColumns = 0
+                End With
+                .Footnotes.Add Range:=selection.Range, Reference:=""
         End With
-        Selection.MoveLeft Unit:=wdCharacter, Count:=2
-        Selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
-        Selection.Font.Superscript = wdToggle
-        Selection.MoveRight Unit:=wdCharacter, Count:=1
-        Selection.TypeText Text:="."
-        Selection.MoveRight Unit:=wdCharacter, Count:=1
-        Selection.PasteAndFormat (wdFormatSurroundingFormattingWithEmphasis)
+        selection.MoveLeft Unit:=wdCharacter, Count:=2
+        selection.TypeText Text:=vbTab
+        selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
+        selection.Font.Superscript = wdToggle
+        selection.MoveRight Unit:=wdCharacter, Count:=1
+        selection.TypeText Text:="."
+        selection.MoveRight Unit:=wdCharacter, Count:=1, Extend:=wdExtend
+        selection.TypeText Text:=vbTab
+        selection.PasteAndFormat (wdFormatSurroundingFormattingWithEmphasis)
     End If
 End Sub
