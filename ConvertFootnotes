@@ -1,8 +1,7 @@
 Sub ConvertFootnotes()
 '
 ' ConvertFootnotes Macro
-' Find the next footnote reference, convert to non-superscript, and add period after.
-' Not needed if you've created your footnotes with movetofootnote()
+' Convert footnote references to non-superscript, and add period after
 '
     Selection.Find.ClearFormatting
     Selection.Find.Replacement.ClearFormatting
