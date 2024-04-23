@@ -1,0 +1,13 @@
+Sub italOnOff()
+'
+' italOnOff Macro
+' I have character styles "Italicized" and "notItal" defined; this macro converts ordinary italicized
+' text to the "Italicized" character style, and converts text in the "Italicized" character style to "notItal."
+' I trigger it with cmd-i.
+'
+    If selection.Style = ActiveDocument.Styles("Italicized") Then
+    selection.Style = ActiveDocument.Styles("notItal")
+    Else: selection.Style = ActiveDocument.Styles("Italicized")
+    End If
+
+End Sub
