@@ -1,0 +1,14 @@
+Sub emDash()
+' inserts an em-dash with a zero-width space on each side, because some fonts do not treat an em-dash as white space 
+' (and so the smart quotes come out wrong). This also puts the text around the zero-width space in the same font
+' as the text where you are inserting it, because some fonts do not include a zero-width space.
+    Dim currentFont As String
+    currentFont = selection.Font.Name
+    selection.TypeText Text:=ChrW(8203)
+    selection.Font.Name = currentFont
+    selection.TypeText Text:="—"
+    selection.TypeText Text:=ChrW(8203)
+    selection.TypeText Text:=" "
+    selection.MoveLeft Unit:=wdCharacter, Count:=1, Extend:=wdExtend
+    selection.Font.Name = currentFont
+End Sub
