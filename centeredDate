@@ -1,0 +1,11 @@
+Sub centeredDate()
+'
+' centeredDate Macro
+' inserts the current date, centered.
+' This one is triggered by the creation of a new document from the "letter" template.
+'
+    selection.ParagraphFormat.Alignment = wdAlignParagraphCenter
+    selection.InsertDateTime DateTimeFormat:="dddd, MMMM d, yyyy", _
+        InsertAsField:=False, DateLanguage:=wdEnglishUS, CalendarType:= _
+        wdCalendarWestern, InsertAsFullWidth:=False
+End Sub
