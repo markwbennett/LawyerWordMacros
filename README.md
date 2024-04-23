@@ -3,11 +3,10 @@ Microsoft Word macros useful to appellate lawyers.
 
 Better instructions for use are forthcoming, but basically:
 
-Tools / Macro / Visual Basic Editor
-
-Normal / Modules / NewMacros
-
-Paste the macro (from "Sub" to "End Sub", inclusive) at the bottom of the code box.
+<ul>
+<li>Tools / Macro / Visual Basic Editor</li>
+<li>Normal / Modules / NewMacros</li>
+<li>Paste the macro (from "Sub" to "End Sub", inclusive) at the bottom of the code box.</li>
 
 
 To trigger a macro:
